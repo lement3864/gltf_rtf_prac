@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import React, { useEffect, useRef } from 'react';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 
@@ -15,12 +15,12 @@ const Move2 = () => {
     });
     
 
-    const camera = new THREE.PerspectiveCamera(100, 1);
-    camera.position.set(0, 4, -1); // Adjusted camera position
+    const camera = new THREE.PerspectiveCamera(50, 1);
+    camera.position.set(0, -5, 4); // Adjusted camera position
     camera.lookAt(new THREE.Vector3(0, 1, 0)); // Adjusted lookAt position
 
-    scene.background = new THREE.Color('grey');
-    const light = new THREE.DirectionalLight('white', 2);
+    scene.background = new THREE.Color('green');
+    const light = new THREE.DirectionalLight('white', 3);
     scene.add(light);
 
     
@@ -29,10 +29,10 @@ const Move2 = () => {
     loader.load('/images/animals/scene.gltf', function (gltf) {
       gltf.scene.scale.set(0.025, 0.025, 0.025);
       console.log(gltf)
-      const models = gltf.scene.children[0].children[0].children[0].children[0].children[0].children[0]; 
+      const models = gltf.scene.children[0].children[0].children[0].children[0].children[2].children[0]; 
       
-
       scene.add(models);
+
 
       const animationClip = gltf.animations[0];
 
@@ -74,12 +74,12 @@ const Move2 = () => {
         renderer.render(scene, camera);
 
         if (isLeftKeyPressed) {
-          if (models.rotation.y < maxRotationAngle) {
-            models.rotation.y += rotationSpeed;
+          if (models.rotation.z < maxRotationAngle) {
+            models.rotation.z += rotationSpeed;
           }
         } else if (isRightKeyPressed) {
-          if (models.rotation.y > -maxRotationAngle) {
-            models.rotation.y -= rotationSpeed;
+          if (models.rotation.z > -maxRotationAngle) {
+            models.rotation.z -= rotationSpeed;
           }
         }
       }
@@ -95,3 +95,5 @@ const Move2 = () => {
 
 
 export default Move2;
+
+
