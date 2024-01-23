@@ -13,39 +13,30 @@ const Move2 = () => {
       canvas: canvasRef.current,
       antialias: true
     });
-    renderer.outputEncoding  = THREE.sRGBEncoding ;
+    
 
-    const camera = new THREE.PerspectiveCamera(60, 1);
-    camera.position.set(0, 3, -5); // Adjusted camera position
+    const camera = new THREE.PerspectiveCamera(100, 1);
+    camera.position.set(0, 4, -1); // Adjusted camera position
     camera.lookAt(new THREE.Vector3(0, 1, 0)); // Adjusted lookAt position
 
-    scene.background = new THREE.Color('white');
-    const light = new THREE.DirectionalLight('0xffff00', 2);
+    scene.background = new THREE.Color('grey');
+    const light = new THREE.DirectionalLight('white', 2);
     scene.add(light);
 
-    console.log(scene)
+    
 
     const loader = new GLTFLoader();
-    loader.load('/images/scene.gltf', function (gltf) {
+    loader.load('/images/animals/scene.gltf', function (gltf) {
       gltf.scene.scale.set(0.025, 0.025, 0.025);
+      console.log(gltf)
+      const models = gltf.scene.children[0].children[0].children[0].children[0].children[0].children[0]; 
       
-      
-      const models = [];
 
-      gltf.scene.traverse(function (child) {
-        if (child.isMesh) {
-          // 각 모델에 대한 조작을 수행합니다.
-          // 예: 모델의 위치를 조정하거나, 배열에 모델을 추가합니다.
-          child.position.set(0, 0, 0); // 모델의 위치를 조정합니다.
-          models.push(child); // 모델을 배열에 추가합니다.
-        }
-      });
-
-      scene.add(models[3]);
+      scene.add(models);
 
       const animationClip = gltf.animations[0];
 
-      const mixer = new THREE.AnimationMixer(models[3]);
+      const mixer = new THREE.AnimationMixer(models);
 
       const action = mixer.clipAction(animationClip);
 
@@ -83,12 +74,12 @@ const Move2 = () => {
         renderer.render(scene, camera);
 
         if (isLeftKeyPressed) {
-          if (models[3].rotation.y < maxRotationAngle) {
-            models[3].rotation.y += rotationSpeed;
+          if (models.rotation.y < maxRotationAngle) {
+            models.rotation.y += rotationSpeed;
           }
         } else if (isRightKeyPressed) {
-          if (models[3].rotation.y > -maxRotationAngle) {
-            models[3].rotation.y -= rotationSpeed;
+          if (models.rotation.y > -maxRotationAngle) {
+            models.rotation.y -= rotationSpeed;
           }
         }
       }
