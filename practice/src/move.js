@@ -64,7 +64,7 @@ const Move = () => {
       function animate() {
         requestAnimationFrame(animate);
 
-        mixer.update(0.04);
+        mixer.update(0.02);
 
         renderer.render(scene, camera);
 
